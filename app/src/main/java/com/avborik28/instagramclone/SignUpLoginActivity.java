@@ -8,6 +8,7 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
@@ -57,7 +58,16 @@ public class SignUpLoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ParseUser.logInInBackground(edtNameLogin.getText().toString(), edtPasswordLogin.getText().toString(), new LogInCallback() {
+                    @Override
+                    public void done(ParseUser user, ParseException e) {
+                        if(user != null && e == null){
+                            FancyToast.makeText(SignUpLoginActivity.this,user.get("username") + " is Logged successfully",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show();
+                        } else {
+                            FancyToast.makeText(SignUpLoginActivity.this,"Error, debil",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                        }
+                    }
+                });
             }
         });
 
