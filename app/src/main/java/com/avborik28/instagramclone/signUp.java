@@ -22,7 +22,7 @@ import java.util.List;
 
 public class signUp extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnSubmit, btnGetAllData;
+    private Button btnSubmit, btnGetAllData, btnNextActivity;
     private EditText edtName, edtPunchSpeed, edtPunchPower, edtKickSpeed, edtKickPower;
     private TextView txtGetData;
     private String allKickBoxers;
@@ -42,6 +42,7 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
         edtKickPower = findViewById(R.id.edtKickPower);
         txtGetData = findViewById(R.id.txtGetData);
         btnGetAllData = findViewById(R.id.btnGetAllData);
+        btnNextActivity = findViewById(R.id.btnNextActivity);
 
         txtGetData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +63,9 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
             public void onClick(View v) {
                 allKickBoxers = "";
                 ParseQuery<ParseObject> queryAll = ParseQuery.getQuery("KickBoxer");
+                //ueryAll.whereGreaterThan("punchPower", "100");
+                queryAll.whereGreaterThanOrEqualTo("punchPower",2340);
+                queryAll.setLimit(1);
                 queryAll.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
@@ -70,8 +74,8 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
                                 for(ParseObject KickBoxer : objects) {
                                     allKickBoxers = allKickBoxers + KickBoxer.get("name") + "\n";
                                 }
-                                FancyToast.makeText(signUp.this,allKickBoxers + "Success bearka",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show();
-                                //Toast.makeText(signUp.this, allKickBoxers + "Success bearka",Toast.LENGTH_LONG).show();
+                               FancyToast.makeText(signUp.this,allKickBoxers + "Success bearka",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show();
+                               // Toast.makeText(signUp.this, allKickBoxers + "Success bearka",Toast.LENGTH_LONG).show();
                             }
                         } else {
                             FancyToast.makeText(signUp.this,"Error, debil",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
@@ -82,6 +86,13 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
             }
         });
         btnSubmit.setOnClickListener(signUp.this);
+
+        btnNextActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
 
     }
 
