@@ -9,18 +9,23 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+import com.shashank.sony.fancytoastlib.FancyToast;
+
+import java.util.List;
 
 public class signUp extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnSubmit;
+    private Button btnSubmit, btnGetAllData;
     private EditText edtName, edtPunchSpeed, edtPunchPower, edtKickSpeed, edtKickPower;
     private TextView txtGetData;
+    private String allKickBoxers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
         edtKickSpeed = findViewById(R.id.edtKickSpeed);
         edtKickPower = findViewById(R.id.edtKickPower);
         txtGetData = findViewById(R.id.txtGetData);
+        btnGetAllData = findViewById(R.id.btnGetAllData);
 
         txtGetData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +57,30 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
                 });
             }
         });
-
+        btnGetAllData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                allKickBoxers = "";
+                ParseQuery<ParseObject> queryAll = ParseQuery.getQuery("KickBoxer");
+                queryAll.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, ParseException e) {
+                        if(e == null){
+                            if(objects.size() > 0 ){
+                                for(ParseObject KickBoxer : objects) {
+                                    allKickBoxers = allKickBoxers + KickBoxer.get("name") + "\n";
+                                }
+                                FancyToast.makeText(signUp.this,allKickBoxers + "Success bearka",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show();
+                                //Toast.makeText(signUp.this, allKickBoxers + "Success bearka",Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            FancyToast.makeText(signUp.this,"Error, debil",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                            //Toast.makeText(signUp.this, "Error debil",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
         btnSubmit.setOnClickListener(signUp.this);
 
     }
