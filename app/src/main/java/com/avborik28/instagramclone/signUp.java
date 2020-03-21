@@ -2,6 +2,7 @@ package com.avborik28.instagramclone;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -35,7 +36,7 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
         btnSubmit = findViewById(R.id.btnSubmit);
-        edtName = findViewById(R.id.edtName);
+        edtName = findViewById(R.id.edtNameSignUp);
         edtPunchSpeed = findViewById(R.id.edtPunchSpeed);
         edtPunchPower = findViewById(R.id.edtPunchPower);
         edtKickSpeed = findViewById(R.id.edtKickSpeed);
@@ -90,7 +91,8 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
         btnNextActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Intent intent = new Intent(signUp.this, SignUpLoginActivity.class);
+                startActivity(intent);
             }
         });
 
