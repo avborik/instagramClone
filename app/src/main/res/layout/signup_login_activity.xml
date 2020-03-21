@@ -12,7 +12,7 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Enter the password"
-        android:inputType="textPersonName"
+        android:inputType="none|textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtNameLogin" />
@@ -60,7 +60,7 @@
         android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Enter the password"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtNameSignUp" />

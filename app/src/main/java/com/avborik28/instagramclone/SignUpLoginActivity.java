@@ -8,9 +8,12 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 public class SignUpLoginActivity extends AppCompatActivity {
 
@@ -34,7 +37,20 @@ public class SignUpLoginActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParseUser appUser = new ParseUser();
+                final ParseUser appUser = new ParseUser();
+                appUser.setUsername(edtNameSignUP.getText().toString());
+                appUser.setPassword(edtPasswordSignUp.getText().toString());
+
+                appUser.signUpInBackground(new SignUpCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e == null){
+                            FancyToast.makeText(SignUpLoginActivity.this,appUser.get("username") + " is signed successfully",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show();
+                        } else {
+                            FancyToast.makeText(SignUpLoginActivity.this,"Error, debil",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                        }
+                    }
+                });
             }
         });
 
