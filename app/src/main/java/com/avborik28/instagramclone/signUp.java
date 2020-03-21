@@ -6,17 +6,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
 public class signUp extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnSubmit;
     private EditText edtName, edtPunchSpeed, edtPunchPower, edtKickSpeed, edtKickPower;
+    private TextView txtGetData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,22 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
         edtPunchPower = findViewById(R.id.edtPunchPower);
         edtKickSpeed = findViewById(R.id.edtKickSpeed);
         edtKickPower = findViewById(R.id.edtKickPower);
+        txtGetData = findViewById(R.id.txtGetData);
+
+        txtGetData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("KickBoxer");
+                parseQuery.getInBackground("G8JCjwHCm1", new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject object, ParseException e) {
+                        if(object != null && e == null){
+                            txtGetData.setText(object.get("name") + "-" + "Punch power: " + object.get("punchPower") + "!" );
+                        }
+                    }
+                });
+            }
+        });
 
         btnSubmit.setOnClickListener(signUp.this);
 
