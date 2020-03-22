@@ -2,6 +2,7 @@ package com.avborik28.instagramclone;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +28,7 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         ParseInstallation.getCurrentInstallation().saveInBackground();
-        setTitle("Sign UP");
+        setTitle("Sign Up");
 
         edtEmail = findViewById(R.id.edtEnterEmail);
         edtUsername = findViewById(R.id.edtUserName);
@@ -50,6 +51,10 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
                 appUser.setUsername(edtUsername.getText().toString());
                 appUser.setPassword(edtPassword.getText().toString());
 
+                final ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage("Signing up" + edtUsername.getText().toString());
+                progressDialog.show();
+
                 appUser.signUpInBackground(new SignUpCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -63,6 +68,7 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
                                     Toast.LENGTH_LONG,FancyToast.ERROR, true).show();
 
                         }
+                        progressDialog.dismiss();
                     }
                 });
                 break;
