@@ -67,7 +67,13 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
                     FancyToast.makeText(signUp.this,
                             "The username, password and email are required, Debil",
                             Toast.LENGTH_LONG,FancyToast.INFO, true).show();
-                } else {
+                } else if(edtPassword.getText().toString().length() < 4) {
+                    FancyToast.makeText(signUp.this,
+                            "The password field must have at least 4 characters, Debil ",
+                            Toast.LENGTH_LONG,FancyToast.INFO, true).show();
+            }
+
+                else {
                     final ParseUser appUser = new ParseUser();
                     appUser.setEmail(edtEmail.getText().toString());
                     appUser.setUsername(edtUsername.getText().toString());
