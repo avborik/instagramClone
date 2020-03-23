@@ -1,7 +1,5 @@
 package com.avborik28.instagramclone;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -10,6 +8,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnSignUpLoginActivity.setOnClickListener(this);
 
         if(ParseUser.getCurrentUser() != null){
-            ParseUser.getCurrentUser().logOut();
+            transitionToSocialMediaActivity();
         }
     }
 
@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         FancyToast.makeText(LoginActivity.this,
                                                 user.getUsername() + " is logged in successfully ",
                                                 Toast.LENGTH_LONG, FancyToast.SUCCESS, true).show();
+                                        transitionToSocialMediaActivity();
                                     } else {
                                         FancyToast.makeText(LoginActivity.this,
                                                 "There was an error, Debil: " + e.getMessage(),
@@ -97,7 +98,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } catch (Exception e ) {
             e.printStackTrace();
         }
-
-
+    }
+    private void transitionToSocialMediaActivity() {
+        Intent intent = new Intent(LoginActivity.this, SocialMediaActivity.class);
+        startActivity(intent);
     }
 }
