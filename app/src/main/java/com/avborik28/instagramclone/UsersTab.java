@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -27,6 +28,8 @@ public class UsersTab extends Fragment {
     private ArrayList arrayList;
     private ArrayAdapter arrayAdapter;
 
+    private TextView txtLoadingUsers;
+
     public UsersTab() {
         // Required empty public constructor
     }
@@ -41,6 +44,8 @@ public class UsersTab extends Fragment {
         listView = view.findViewById(R.id.listView);
         arrayList = new ArrayList();
         arrayAdapter = new ArrayAdapter (getContext(), android.R.layout.simple_list_item_1, arrayList);
+        txtLoadingUsers = view.findViewById(R.id.txtLoadingUsers);
+
 
         ParseQuery <ParseUser> parseQuery = ParseUser.getQuery();
 
@@ -54,6 +59,8 @@ public class UsersTab extends Fragment {
                             arrayList.add(user.getUsername());
                         }
                         listView.setAdapter(arrayAdapter);
+                        txtLoadingUsers.animate().alpha(0).setDuration(2000);
+                        listView.setVisibility(View.VISIBLE);
                     }
                 }
             }
