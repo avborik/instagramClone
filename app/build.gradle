@@ -40,7 +40,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation "androidx.viewpager:viewpager:1.0.0"
 
-    
+
 }
 
 repositories {
