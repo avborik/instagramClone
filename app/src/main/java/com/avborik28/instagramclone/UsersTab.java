@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UsersTab extends Fragment implements AdapterView.OnItemClickListener {
+public class UsersTab extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private ListView listView;
     private ArrayList <String> arrayList;
@@ -77,5 +77,13 @@ public class UsersTab extends Fragment implements AdapterView.OnItemClickListene
         Intent intent = new Intent(getContext(),UserPosts.class);
         intent.putExtra("username",arrayList.get(position));
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        ParseQuery<ParseUser> parseQuery = ParseUser.getQuery();
+        parseQuery.whereEqualTo("username",arrayList.get(position));
+
+        return false;
     }
 }

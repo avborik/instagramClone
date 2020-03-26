@@ -1,5 +1,6 @@
 package com.avborik28.instagramclone;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -64,6 +65,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             "The password field must have at least 4 characters, Debil ",
                             Toast.LENGTH_LONG,FancyToast.INFO, true).show();
                 } else {
+                    final ProgressDialog progressDialog = new ProgressDialog(this);
+                    progressDialog.setMessage("Logging in " + edtLoginEmail.getText().toString());
+                    progressDialog.show();
                     ParseUser.logInInBackground(edtLoginEmail.getText().toString(),
                             edtLogInPassword.getText().toString(),
                             new LogInCallback() {
@@ -79,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 "There was an error, Debil: " + e.getMessage(),
                                                 Toast.LENGTH_LONG, FancyToast.ERROR, true).show();
                                     }
+                                    progressDialog.dismiss();
                                 }
                             });
                 }
